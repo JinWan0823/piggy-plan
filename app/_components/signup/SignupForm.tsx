@@ -11,7 +11,7 @@ export default function SignupForm() {
     pwdChk: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors = {
       id: data.id ? "" : "* 아이디를 입력해주세요.",
@@ -28,6 +28,7 @@ export default function SignupForm() {
         : "비밀번호 확인해주세요.",
     };
     setErrors(newErrors);
+    return;
   };
 
   return (
