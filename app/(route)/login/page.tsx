@@ -33,7 +33,7 @@ export default function LoginPage() {
           </button>
         </form>
         <Link
-          href={"/"}
+          href={"/signup"}
           className="px-1 text-sm text-center text-gray-300 mt-0"
         >
           회원이 아니신가요? 회원가입
