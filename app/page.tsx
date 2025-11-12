@@ -3,7 +3,7 @@ import MainWrap from "./_components/common/MainWrap";
 export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-50 font-sans dark:bg-black">
-      <div className="w-[900px] h-[600px] mx-auto">
+      <div className="w-[900px] mx-auto">
         <header className="p-2 flex items-center justify-between border-b-2 border-[#dfdfdf]">
           <div className="w-[240px]">
             <Logo />

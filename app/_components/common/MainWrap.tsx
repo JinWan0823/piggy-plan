@@ -3,6 +3,7 @@ import { useState } from "react";
 import MoneyTable from "./MoneyTable";
 import TabMenu from "./TabMenu";
 import MoneyList from "./MoneyList";
+import Calendar from "./Calendar";
 
 export default function MainWrap() {
   const [nowMonth, setNowMonth] = useState(11);
@@ -14,13 +15,14 @@ export default function MainWrap() {
         <h2 className="font-bold text-2xl">{nowMonth}월 가계부</h2>
         <TabMenu />
       </div>
-      <ul>
+      {/* <ul>
         <MoneyList menu={"식비"} />
         <MoneyList menu={"취미"} />
         <MoneyList menu={"문화"} />
         <MoneyList menu={"여행"} />
         <MoneyList menu={"기타"} />
-      </ul>
+      </ul> */}
+      <Calendar />
     </>
   );
 }
