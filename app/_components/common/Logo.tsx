@@ -2,9 +2,9 @@ import Image from "next/image";
 
 export default function Logo() {
   return (
-    <div className="logo-box w-full h-[46px]">
+    <div className="logo-box w-full">
       <Image
-        src={"/logo2.png"}
+        src={"/main-logo.png"}
         alt="piggyPlan-logo-img"
         width={350}
         height={50}
