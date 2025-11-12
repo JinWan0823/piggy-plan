@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-50 font-sans dark:bg-black">
       <div className="w-[900px] mx-auto">
-        <header className="p-2 flex items-center justify-between border-b-2 border-[#dfdfdf]">
+        <header className="p-2 flex items-center justify-between border-b-2 border-[#ff6b81]">
           <div className="w-[240px]">
             <Logo />
           </div>
