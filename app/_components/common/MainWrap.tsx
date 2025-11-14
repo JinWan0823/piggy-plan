@@ -6,7 +6,10 @@ import MoneyList from "./MoneyList";
 import Calendar from "./Calendar";
 
 export default function MainWrap() {
-  const [nowMonth, setNowMonth] = useState(11);
+  const today = new Date();
+  const [nowYear, setNowYear] = useState(today.getFullYear());
+  const [nowMonth, setNowMonth] = useState(today.getMonth() + 1);
+  const [todayDate, setTodayDate] = useState(today.getDate());
 
   return (
     <>
@@ -22,7 +25,7 @@ export default function MainWrap() {
         <MoneyList menu={"여행"} />
         <MoneyList menu={"기타"} />
       </ul> */}
-      <Calendar />
+      <Calendar nowYear={nowYear} nowMonth={nowMonth} todayDate={todayDate} />
     </>
   );
 }
