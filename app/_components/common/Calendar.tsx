@@ -1,32 +1,59 @@
-export default function Calendar() {
-  const dayArr = Array.from({ length: 31 });
+import CalendarList from "./CalendarList";
+
+export default function Calendar({
+  nowYear,
+  nowMonth,
+  todayDate,
+}: {
+  nowYear: number;
+  nowMonth: number;
+  todayDate: number;
+}) {
+  const lastDay = new Date(nowYear, nowMonth, 0).getDate();
+  const startDay = new Date(nowYear, nowMonth - 1, 1).getDay();
+
+  const dayArr = Array.from({ length: startDay + lastDay }, (_, i) => {
+    if (i < startDay) return null;
+    return i - startDay + 1;
+  });
+
   return (
     <>
       <div>
         <ul className="grid grid-cols-7 gap-1 mt-2 text-center text-white font-bold">
-          <li className="bg-[#ff6b81] rounded">SUN</li>
-          <li className="bg-[#ff6b81] rounded">MON</li>
-          <li className="bg-[#ff6b81] rounded">TUE</li>
-          <li className="bg-[#ff6b81] rounded">WEN</li>
-          <li className="bg-[#ff6b81] rounded">TUR</li>
-          <li className="bg-[#ff6b81] rounded">FRI</li>
-          <li className="bg-[#ff6b81] rounded">SAT</li>
+          {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map((d) => (
+            <li key={d} className="bg-[#ff6b81] rounded">
+              {d}
+            </li>
+          ))}
         </ul>
         <ul className="grid grid-cols-7 gap-1 mt-1">
-          {dayArr.map((i, idx) => (
+          {dayArr.map((day, idx) => (
             <li
               key={idx}
-              className="border-1 border-gray-200 h-[120px] relative p-1 bg-white"
+              className={`border border-gray-200 h-[100px] relative p-1 ${
+                day ? "bg-white" : "bg-[#fbfbfb]"
+              }`}
             >
-              <span
-                className={`
-                inline-flex items-center justify-center 
-                w-[24px] h-[24px] text-sm rounded-full text-gray-500
-                ${idx === 11 && "border-2 border-[#ff6b81]"}
-                `}
-              >
-                {idx + 1}
-              </span>
+              {day && (
+                <span
+                  className={`inline-flex items-center justify-center 
+                w-[24px] h-[24px] text-sm rounded-full
+                ${
+                  day === todayDate && nowMonth === new Date().getMonth() + 1
+                    ? "border-2 border-[#ff6b81]"
+                    : "text-gray-500"
+                }`}
+                >
+                  {day}
+                </span>
+              )}
+
+              <ul className="flex flex-col gap-1">
+                <CalendarList menu={"식비"} />
+                <CalendarList menu={"문화"} />
+                <CalendarList menu={"기타"} />
+              </ul>
             </li>
           ))}
         </ul>
