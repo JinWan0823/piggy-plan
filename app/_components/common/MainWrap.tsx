@@ -14,6 +14,15 @@ export default function MainWrap() {
 
   const [menu, setMenu] = useState(false);
 
+  //api연동 후 state로 변경
+  const totalMoney = [
+    { menu: "취미", money: 330200 },
+    { menu: "식비", money: 400333 },
+    { menu: "여행", money: 120500 },
+    { menu: "문화", money: 40500 },
+    { menu: "기타", money: 20000 },
+  ];
+
   const handlePrevMonth = () => {
     if (nowMonth <= 1) return;
     setNowMonth((prev) => prev - 1);
@@ -30,7 +39,7 @@ export default function MainWrap() {
 
   return (
     <>
-      <MoneyTable />
+      <MoneyTable totalMoney={totalMoney} />
       <div className="flex items-center justify-between my-2">
         <div className="flex items-stratch rounded overflow-hidden border-1 border-gray-200">
           <button
