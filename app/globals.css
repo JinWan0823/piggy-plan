@@ -24,3 +24,20 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+button {
+  cursor: pointer;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #ff6b81; /* 스크롤바 막대 색상 */
+  border: 2px solid #ff6b81; /* 스크롤바 막대 테두리 설정  */
+  border-radius: 20px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: rgba(220, 20, 60, 0.1); /*스크롤바 뒷 배경 색상*/
+}
