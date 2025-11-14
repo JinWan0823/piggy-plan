@@ -1,5 +1,3 @@
-import { start } from "repl";
-
 export default function Calendar({
   nowYear,
   nowMonth,
@@ -10,7 +8,6 @@ export default function Calendar({
   todayDate: number;
 }) {
   const lastDay = new Date(nowYear, nowMonth, 0).getDate();
-
   const startDay = new Date(nowYear, nowMonth - 1, 1).getDay();
 
   const dayArr = Array.from({ length: startDay + lastDay }, (_, i) => {
@@ -41,7 +38,7 @@ export default function Calendar({
                   className={`inline-flex items-center justify-center 
                 w-[24px] h-[24px] text-sm rounded-full
                 ${
-                  day === todayDate
+                  day === todayDate && nowMonth === new Date().getMonth() + 1
                     ? "border-2 border-[#ff6b81]"
                     : "text-gray-500"
                 }`}
