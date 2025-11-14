@@ -1,3 +1,5 @@
+import CalendarList from "./CalendarList";
+
 export default function Calendar({
   nowYear,
   nowMonth,
@@ -46,6 +48,12 @@ export default function Calendar({
                   {day}
                 </span>
               )}
+
+              <ul className="flex flex-col gap-1">
+                <CalendarList menu={"식비"} />
+                <CalendarList menu={"문화"} />
+                <CalendarList menu={"기타"} />
+              </ul>
             </li>
           ))}
         </ul>

@@ -1,7 +1,7 @@
 "use client";
-import { SetStateAction, useState } from "react";
+import { SetStateAction } from "react";
 import { IoIosList } from "react-icons/io";
-import { IoCalendarClearOutline } from "react-icons/io5";
+import { IoCalendarOutline } from "react-icons/io5";
 
 export default function TabMenu({
   menu,
@@ -29,7 +29,7 @@ export default function TabMenu({
         />
         <div className="flex justify-between p-[1px] items-center text-lg text-[#ff6b81]">
           <div className="w-[28px] h-[28px] rounded-full flex items-center justify-center">
-            <IoCalendarClearOutline />
+            <IoCalendarOutline />
           </div>
           <div className="w-[28px] h-[28px] rounded-full flex items-center justify-center">
             <IoIosList />
