@@ -32,7 +32,7 @@ export default function Calendar({
             <li
               key={idx}
               className={`border border-gray-200 relative p-1 ${
-                day ? "bg-white" : "bg-[#fbfbfb]"
+                day ? "bg-white shadow-xl" : "bg-[#fbfbfb]"
               }`}
             >
               {day && (
