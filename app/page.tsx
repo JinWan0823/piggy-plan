@@ -8,8 +8,12 @@ export default function Home() {
           <div className="w-[240px]">
             <Logo />
           </div>
-          <p className="font-bold">
-            <span className="point-color">듀두듀듀</span>님 어서오세요!
+          <p className="">
+            <span className="font-bold text-[#ff6b81]">듀두듀듀</span>님
+            어서오세요 👋
+            <button className="bg-[#ff6b81] text-sm text-white p-1 px-5 rounded-full border-2 border-white ml-4">
+              통계
+            </button>
           </p>
         </header>
 

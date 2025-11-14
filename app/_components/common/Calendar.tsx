@@ -31,7 +31,7 @@ export default function Calendar({
           {dayArr.map((day, idx) => (
             <li
               key={idx}
-              className={`border border-gray-200 h-[100px] relative p-1 ${
+              className={`border border-gray-200 relative p-1 ${
                 day ? "bg-white" : "bg-[#fbfbfb]"
               }`}
             >
@@ -49,10 +49,10 @@ export default function Calendar({
                 </span>
               )}
 
-              <ul className="flex flex-col gap-1">
+              <ul className="flex flex-col gap-1 mt-1 h-[70px] overflow-y-scroll scrollbar pr-1">
                 <CalendarList menu={"식비"} />
                 <CalendarList menu={"문화"} />
-                <CalendarList menu={"기타"} />
+                <CalendarList menu={"문화"} />
               </ul>
             </li>
           ))}
