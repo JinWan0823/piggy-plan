@@ -1,6 +1,15 @@
 import { getCategoryInfo } from "@/app/_utils/categoryMap";
+import { motion } from "framer-motion";
 
-export default function ProgressBar({ menu }: { menu: string }) {
+export default function ProgressBar({
+  menu,
+  money,
+  percent,
+}: {
+  menu: string;
+  money: number;
+  percent: number;
+}) {
   const { icon: Icon, color } = getCategoryInfo(menu);
   return (
     <li className="w-full flex items-center gap-2">
@@ -11,11 +20,20 @@ export default function ProgressBar({ menu }: { menu: string }) {
       >
         <Icon />
       </div>
-      <div
-        className={`progress w-[60%] h-[32px] ${color} rounded-r-full flex items-center px-2 font-bold text-sm text-white`}
-      >
-        <p>60,300원</p>
-      </div>
+      <motion.div
+        className={`progress h-[32px] ${color} rounded-xl flex items-center px-2 font-bold text-sm text-white`}
+        initial={{
+          width: 0,
+        }}
+        animate={{
+          width: `${percent}%`,
+        }}
+        transition={{
+          ease: "easeIn",
+          duration: 1.4,
+        }}
+      ></motion.div>
+      <p className="font-bold text-sm">{money.toLocaleString()}</p>
     </li>
   );
 }
