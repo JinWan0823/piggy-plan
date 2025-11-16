@@ -5,6 +5,7 @@ import TabMenu from "./TabMenu";
 import MoneyList from "./MoneyList";
 import Calendar from "./Calendar";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import MoneyForm from "./MoneyForm";
 
 export default function MainWrap() {
   const today = new Date();
@@ -13,6 +14,8 @@ export default function MainWrap() {
   const [todayDate, setTodayDate] = useState(today.getDate());
 
   const [menu, setMenu] = useState(false);
+
+  const [formState, setFormState] = useState(false);
 
   //api연동 후 state로 변경
   const totalMoney = [
@@ -58,8 +61,19 @@ export default function MainWrap() {
             <FaChevronRight />
           </button>
         </div>
-        <TabMenu menu={menu} setMenu={setMenu} />
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => setFormState(true)}
+            className="bg-[#ff6b81] text-sm text-white font-bold p-1 px-5 rounded-full border-2 border-white ml-4"
+          >
+            가계부 작성하기
+          </button>
+          <TabMenu menu={menu} setMenu={setMenu} />
+        </div>
       </div>
+
+      {formState && <MoneyForm setFormState={setFormState} />}
+
       {!menu ? (
         <ul>
           <MoneyList menu={"식비"} />
