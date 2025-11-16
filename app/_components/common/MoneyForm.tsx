@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import React, { SetStateAction, useState } from "react";
+import { IoClose } from "react-icons/io5";
 
 function FormRow({
   label,
@@ -16,8 +17,12 @@ function FormRow({
   );
 }
 
-export default function MoneyForm() {
-  const years = [2023, 2024, 2025];
+export default function MoneyForm({
+  setFormState,
+}: {
+  setFormState: React.Dispatch<SetStateAction<boolean>>;
+}) {
+  const years = [2025, 2024, 2023, 2022, 2021, 2020];
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
@@ -28,6 +33,14 @@ export default function MoneyForm() {
   return (
     <div className="fixed inset-0 bg-[#333333de] z-[999] flex items-center justify-center">
       <div className="bg-white w-[95%] max-w-[420px] border-t-8 border-[#ff6b81] rounded p-4 flex flex-col gap-3 text-sm">
+        <button
+          onClick={() => setFormState(false)}
+          className="w-[30px] h-[30px]
+                bg-[#ff6b81] text-white text-xl rounded-full
+                flex items-center justify-center"
+        >
+          <IoClose />
+        </button>
         <FormRow label="카테고리">
           <select className="w-full">
             <option value="식비">식비</option>

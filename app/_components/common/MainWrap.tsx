@@ -72,7 +72,7 @@ export default function MainWrap() {
         </div>
       </div>
 
-      {formState && <MoneyForm />}
+      {formState && <MoneyForm setFormState={setFormState} />}
 
       {!menu ? (
         <ul>
