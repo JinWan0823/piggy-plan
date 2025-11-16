@@ -1,0 +1,102 @@
+"use client";
+import { useState } from "react";
+
+function FormRow({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-center gap-1 p-1 px-2 rounded border border-gray-300">
+      <span className="font-bold w-[60px] shrink-0">{label}</span>
+      {children}
+    </div>
+  );
+}
+
+export default function MoneyForm() {
+  const years = [2023, 2024, 2025];
+  const months = Array.from({ length: 12 }, (_, i) => i + 1);
+  const days = Array.from({ length: 31 }, (_, i) => i + 1);
+
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [day, setDay] = useState(new Date().getDate());
+
+  return (
+    <div className="fixed inset-0 bg-[#333333de] z-[999] flex items-center justify-center">
+      <div className="bg-white w-[95%] max-w-[420px] border-t-8 border-[#ff6b81] rounded p-4 flex flex-col gap-3 text-sm">
+        <FormRow label="카테고리">
+          <select className="w-full">
+            <option value="식비">식비</option>
+            <option value="문화">문화</option>
+            <option value="여행">여행</option>
+            <option value="취미">취미</option>
+            <option value="기타">기타</option>
+          </select>
+        </FormRow>
+
+        <FormRow label="날짜">
+          <div className="flex gap-1 w-full">
+            <select
+              className="w-full"
+              value={year}
+              onChange={(e) => setYear(Number(e.target.value))}
+            >
+              {years.map((y) => (
+                <option key={y} value={y}>
+                  {y}년
+                </option>
+              ))}
+            </select>
+
+            <select
+              className="w-full"
+              value={month}
+              onChange={(e) => setMonth(Number(e.target.value))}
+            >
+              {months.map((m) => (
+                <option key={m} value={m}>
+                  {m}월
+                </option>
+              ))}
+            </select>
+
+            <select
+              className="w-full"
+              value={day}
+              onChange={(e) => setDay(Number(e.target.value))}
+            >
+              {days.map((d) => (
+                <option key={d} value={d}>
+                  {d}일
+                </option>
+              ))}
+            </select>
+          </div>
+        </FormRow>
+
+        <FormRow label="금액">
+          <input
+            type="text"
+            placeholder="금액을 입력해주세요."
+            className="p-1 w-full"
+          />
+        </FormRow>
+
+        <FormRow label="내용">
+          <textarea
+            placeholder="내용을 입력해주세요."
+            className="border border-gray-200 p-1 w-full h-[80px]"
+          />
+        </FormRow>
+
+        <button className="w-full py-2 rounded bg-[#ff6b81] font-bold text-white">
+          저장하기
+        </button>
+      </div>
+    </div>
+  );
+}
