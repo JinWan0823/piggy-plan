@@ -28,7 +28,37 @@ export default function SignupForm() {
         : "비밀번호 확인해주세요.",
     };
     setErrors(newErrors);
-    return;
+
+    const hasError = Object.values(newErrors).some((v) => v !== "");
+    if (hasError) return;
+
+    try {
+      const user = {
+        username: data.id,
+        nickname: data.name,
+        password: data.pwd,
+      };
+
+      const res = await fetch("/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      });
+
+      const json = await res.json();
+
+      if (!res.ok) {
+        // 서버 오류 처리
+        alert(json.message || "회원가입 실패");
+        return;
+      }
+
+      // 성공 처리
+      alert("회원가입 성공!");
+      // router.push("/login") 등 이동
+    } catch (err) {
+      alert("서버와 연결할 수 없습니다.");
+    }
   };
 
   return (
