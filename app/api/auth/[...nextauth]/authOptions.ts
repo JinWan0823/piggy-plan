@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
         autoLogin: { label: "Auto Login", type: "checkbox" },
       },
       async authorize(credentials) {
-        const db = (await connectDB).db("heroMe");
+        const db = (await connectDB).db("piggyplan");
         const user = await db
           .collection("user")
           .findOne({ username: credentials?.username });
