@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function SignupForm() {
@@ -10,6 +11,8 @@ export default function SignupForm() {
     pwd: "",
     pwdChk: "",
   });
+
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,14 +51,12 @@ export default function SignupForm() {
       const json = await res.json();
 
       if (!res.ok) {
-        // 서버 오류 처리
         alert(json.message || "회원가입 실패");
         return;
       }
 
-      // 성공 처리
       alert("회원가입 성공!");
-      // router.push("/login") 등 이동
+      router.push("/login");
     } catch (err) {
       alert("서버와 연결할 수 없습니다.");
     }
