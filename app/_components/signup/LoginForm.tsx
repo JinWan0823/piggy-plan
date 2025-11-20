@@ -1,11 +1,19 @@
 "use client";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import Logo from "../common/Logo";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
-  const [rememberId, setRememberId] = useState(false);
+  const [rememberId, setRememberId] = useState(() =>
+    typeof window !== "undefined" && localStorage.getItem("savedId")
+      ? true
+      : false
+  );
+
+  const [savedId, setSavedId] = useState(() =>
+    typeof window !== "undefined" ? localStorage.getItem("savedId") || "" : ""
+  );
   const router = useRouter();
 
   const [data, submitAction, isPending] = useActionState(handleLogin, null);
@@ -13,7 +21,14 @@ export default function LoginForm() {
   async function handleLogin(_prevState: unknown, formData: FormData) {
     const username = formData.get("username");
     const password = formData.get("password");
-    const autoLogin = "false";
+    const autoLogin = formData.get("autologin");
+    const savedId = formData.get("savedId");
+
+    if (savedId) {
+      localStorage.setItem("savedId", String(username));
+    } else {
+      localStorage.removeItem("savedId");
+    }
 
     const res = await signIn("credentials", {
       redirect: false,
@@ -37,6 +52,8 @@ export default function LoginForm() {
         <input
           type="text"
           name="username"
+          value={savedId}
+          onChange={(e) => setSavedId(e.target.value)}
           className="border border-gray-300 p-1 rounded outline-[#ff6b81]"
           placeholder="아이디"
         />
@@ -57,6 +74,7 @@ export default function LoginForm() {
             <input
               type="checkbox"
               id="save-id"
+              name="savedId"
               onChange={() => setRememberId((prev) => !prev)}
               checked={rememberId}
             />
