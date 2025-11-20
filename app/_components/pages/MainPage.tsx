@@ -3,9 +3,14 @@ import { useState } from "react";
 import Logo from "../common/Logo";
 import MainWrap from "../common/MainWrap";
 import MonthlyTotal from "../common/MonthlyTotal";
+import { signOut } from "next-auth/react";
 
 export default function MainPage() {
   const [modal, setModal] = useState(false);
+
+  const handleLogout = async () => {
+    await signOut({ redirect: true });
+  };
   return (
     <>
       <div className="w-[900px] mx-auto">
@@ -21,6 +26,12 @@ export default function MainPage() {
               className="bg-[#ff6b81] text-sm text-white p-1 px-5 rounded-full border-2 border-white ml-4"
             >
               통계
+            </button>
+            <button
+              onClick={handleLogout}
+              className="bg-[#ff6b81] text-sm text-white p-1 px-5 rounded-full border-2 border-white"
+            >
+              로그아웃
             </button>
           </p>
         </header>

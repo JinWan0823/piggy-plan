@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
           id: user._id.toString(),
           username: user.username,
           nickname: user.nickname,
-          autoLogin: credentials?.autoLogin === "true",
+          autoLogin: credentials?.autoLogin === "on",
         } as UserProps;
       },
     }),
