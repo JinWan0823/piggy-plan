@@ -2,30 +2,33 @@
 import { useActionState, useState } from "react";
 import Logo from "../common/Logo";
 import { signIn } from "next-auth/react";
-
-export async function handleLogin(_prevState: unknown, formData: FormData) {
-  const username = formData.get("username");
-  const password = formData.get("password");
-  const autoLogin = "false";
-
-  const res = await signIn("credentials", {
-    redirect: false,
-    username,
-    password,
-    autoLogin,
-  });
-
-  if (res?.error) {
-    return alert(res.error);
-  }
-
-  alert("로그인성공");
-}
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const [rememberId, setRememberId] = useState(false);
+  const router = useRouter();
 
   const [data, submitAction, isPending] = useActionState(handleLogin, null);
+
+  async function handleLogin(_prevState: unknown, formData: FormData) {
+    const username = formData.get("username");
+    const password = formData.get("password");
+    const autoLogin = "false";
+
+    const res = await signIn("credentials", {
+      redirect: false,
+      username,
+      password,
+      autoLogin,
+    });
+
+    if (res?.error) {
+      return alert(res.error);
+    }
+
+    alert("로그인성공");
+    router.push("/");
+  }
 
   return (
     <>
