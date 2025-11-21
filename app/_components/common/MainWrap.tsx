@@ -78,17 +78,17 @@ export default function MainWrap() {
 
       {!menu ? (
         <ul>
-          {/* <MoneyList menu={"식비"} />
-          <MoneyList menu={"취미"} />
-          <MoneyList menu={"문화"} />
-          <MoneyList menu={"여행"} />
-          <MoneyList menu={"기타"} /> */}
           {moneyList.map((db, idx) => (
             <MoneyList key={idx} menu={db} />
           ))}
         </ul>
       ) : (
-        <Calendar nowYear={nowYear} nowMonth={nowMonth} todayDate={todayDate} />
+        <Calendar
+          nowYear={nowYear}
+          nowMonth={nowMonth}
+          todayDate={todayDate}
+          moneyList={moneyList}
+        />
       )}
     </>
   );
