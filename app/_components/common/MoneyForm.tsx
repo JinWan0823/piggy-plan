@@ -1,5 +1,6 @@
 "use client";
-import React, { SetStateAction, useState } from "react";
+import { createMoney } from "@/app/_actions/money";
+import React, { SetStateAction, useActionState, useState } from "react";
 import { IoClose } from "react-icons/io5";
 
 function FormRow({
@@ -30,9 +31,18 @@ export default function MoneyForm({
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [day, setDay] = useState(new Date().getDate());
 
+  const [category, setCategory] = useState("식비");
+  const [money, setMoney] = useState("");
+  const [content, setContent] = useState("");
+
+  const [state, action] = useActionState(createMoney, null);
+
   return (
     <div className="fixed inset-0 bg-[#333333de] z-[999] flex items-center justify-center">
-      <div className="bg-white w-[95%] max-w-[420px] border-t-8 border-[#ff6b81] rounded p-4 flex flex-col gap-3 text-sm">
+      <form
+        action={action}
+        className="bg-white w-[95%] max-w-[420px] border-t-8 border-[#ff6b81] rounded p-4 flex flex-col gap-3 text-sm"
+      >
         <button
           onClick={() => setFormState(false)}
           className="w-[30px] h-[30px]
@@ -42,7 +52,12 @@ export default function MoneyForm({
           <IoClose />
         </button>
         <FormRow label="카테고리">
-          <select className="w-full">
+          <select
+            className="w-full"
+            name="category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
             <option value="식비">식비</option>
             <option value="문화">문화</option>
             <option value="여행">여행</option>
@@ -91,11 +106,16 @@ export default function MoneyForm({
           </div>
         </FormRow>
 
+        <input type="hidden" name="date" value={`${year}-${month}-${day}`} />
+
         <FormRow label="금액">
           <input
             type="text"
             placeholder="금액을 입력해주세요."
             className="p-1 w-full"
+            name="money"
+            value={money}
+            onChange={(e) => setMoney(e.target.value)}
           />
         </FormRow>
 
@@ -103,13 +123,21 @@ export default function MoneyForm({
           <textarea
             placeholder="내용을 입력해주세요."
             className="border border-gray-200 p-1 w-full h-[80px]"
+            name="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
           />
         </FormRow>
 
         <button className="w-full py-2 rounded bg-[#ff6b81] font-bold text-white">
           저장하기
         </button>
-      </div>
+        {state?.message && (
+          <p className={state.success ? "text-green-500" : "text-red-500"}>
+            {state.message}
+          </p>
+        )}
+      </form>
     </div>
   );
 }

@@ -1,12 +1,21 @@
+import { TotalMoneyTypes } from "@/app/_types/moneyPlanTypes";
 import Category from "./Category";
 
-export default function MoneyList({ menu }: { menu: string }) {
+interface MoneyListProps {
+  menu: TotalMoneyTypes;
+}
+
+export default function MoneyList({ menu }: MoneyListProps) {
   return (
     <li className="w-full p-2 flex items-center bg-gray-200 rounded mt-2 font-bold shadow-sm">
-      <Category menu={menu} />
-      <span className="w-[120px] text-center">60,300원</span>
-      <p className="w-full text-sm">마트 장보기</p>
-      <span className="w-[100px] text-sm">2025-11-12</span>
+      <Category menu={menu.category} />
+      <span className="w-[120px] text-center">
+        {menu.money.toLocaleString()}원
+      </span>
+      <p className="w-full text-sm">{menu.content}</p>
+      <span className="w-[120px] text-sm">
+        {new Date(menu.date).toLocaleDateString("ko-KR")}
+      </span>
     </li>
   );
 }

@@ -1,13 +1,16 @@
+import { TotalMoneyTypes } from "@/app/_types/moneyPlanTypes";
 import CalendarList from "./CalendarList";
 
 export default function Calendar({
   nowYear,
   nowMonth,
   todayDate,
+  moneyList,
 }: {
   nowYear: number;
   nowMonth: number;
   todayDate: number;
+  moneyList: TotalMoneyTypes[];
 }) {
   const lastDay = new Date(nowYear, nowMonth, 0).getDate();
   const startDay = new Date(nowYear, nowMonth - 1, 1).getDay();
@@ -16,6 +19,16 @@ export default function Calendar({
     if (i < startDay) return null;
     return i - startDay + 1;
   });
+
+  const moneyByDay = (day: number) =>
+    moneyList.filter((item) => {
+      const d = new Date(item.date);
+      return (
+        d.getFullYear() === nowYear &&
+        d.getMonth() + 1 === nowMonth &&
+        d.getDate() === day
+      );
+    });
 
   return (
     <>
@@ -50,9 +63,10 @@ export default function Calendar({
               )}
 
               <ul className="flex flex-col gap-1 mt-1 h-[70px] overflow-y-scroll scrollbar pr-1">
-                <CalendarList menu={"식비"} />
-                <CalendarList menu={"문화"} />
-                <CalendarList menu={"문화"} />
+                {day &&
+                  moneyByDay(day).map((item, idx) => (
+                    <CalendarList key={idx} menu={item} />
+                  ))}
               </ul>
             </li>
           ))}

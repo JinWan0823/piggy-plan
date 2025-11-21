@@ -8,4 +8,7 @@ export interface MenuTypes {
 export interface TotalMoneyTypes {
   menu: string;
   money: number;
+  content: string;
+  date: string;
+  category: string;
 }
