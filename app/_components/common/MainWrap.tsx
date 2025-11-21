@@ -14,17 +14,9 @@ export default function MainWrap() {
   const [todayDate, setTodayDate] = useState(today.getDate());
 
   const [menu, setMenu] = useState(false);
+  const [totalMoney, setTotalMoney] = useState([]);
 
   const [formState, setFormState] = useState(false);
-
-  //api연동 후 state로 변경
-  const totalMoney = [
-    { menu: "취미", money: 330200 },
-    { menu: "식비", money: 400333 },
-    { menu: "여행", money: 120500 },
-    { menu: "문화", money: 40500 },
-    { menu: "기타", money: 20000 },
-  ];
 
   const handlePrevMonth = () => {
     if (nowMonth <= 1) return;
@@ -37,7 +29,15 @@ export default function MainWrap() {
   };
 
   useEffect(() => {
-    console.log("데이터 요청");
+    const fetchData = async () => {
+      const res = await fetch(
+        `/api/money/monthly?year=${nowYear}&month=${nowMonth}`
+      );
+      const data = await res.json();
+      setTotalMoney(data);
+    };
+
+    fetchData();
   }, [nowMonth]);
 
   return (
