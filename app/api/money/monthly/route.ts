@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
 
   const year = Number(searchParams.get("year"));
-  const month = Number(searchParams.get("month")); // 1~12
+  const month = Number(searchParams.get("month"));
 
   if (!year || !month) {
     return NextResponse.json(
@@ -28,20 +28,19 @@ export async function GET(req: NextRequest) {
   const start = new Date(year, month - 1, 1);
   const end = new Date(year, month, 1);
 
+  const categories = ["식비", "문화", "여행", "취미", "기타"];
+
   try {
     const client = await connectDB;
     const db = client.db("piggyplan");
 
-    const result = await db
+    const rawResult = await db
       .collection("moneyPlan")
       .aggregate([
         {
           $match: {
             username: session.user.username,
-            date: {
-              $gte: start,
-              $lt: end,
-            },
+            date: { $gte: start, $lt: end },
           },
         },
         {
@@ -60,7 +59,21 @@ export async function GET(req: NextRequest) {
       ])
       .toArray();
 
-    return NextResponse.json(result, { status: 200 });
+    // 없는 카테고리는 0으로 채우기
+    const total = categories.map((cat) => {
+      const found = rawResult.find((item) => item.menu === cat);
+      return { menu: cat, money: found ? found.money : 0 };
+    });
+
+    const userData = await db
+      .collection("moneyPlan")
+      .find({
+        username: session.user.username,
+        date: { $gte: start, $lt: end },
+      })
+      .toArray();
+
+    return NextResponse.json({ total, userData }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { message: "서버 에러", error: String(err) },

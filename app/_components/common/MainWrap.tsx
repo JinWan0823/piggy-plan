@@ -15,6 +15,7 @@ export default function MainWrap() {
 
   const [menu, setMenu] = useState(false);
   const [totalMoney, setTotalMoney] = useState([]);
+  const [moneyList, setMoneyList] = useState([]);
 
   const [formState, setFormState] = useState(false);
 
@@ -34,7 +35,8 @@ export default function MainWrap() {
         `/api/money/monthly?year=${nowYear}&month=${nowMonth}`
       );
       const data = await res.json();
-      setTotalMoney(data);
+      setTotalMoney(data.total);
+      setMoneyList(data.userData);
     };
 
     fetchData();
@@ -76,11 +78,14 @@ export default function MainWrap() {
 
       {!menu ? (
         <ul>
-          <MoneyList menu={"식비"} />
+          {/* <MoneyList menu={"식비"} />
           <MoneyList menu={"취미"} />
           <MoneyList menu={"문화"} />
           <MoneyList menu={"여행"} />
-          <MoneyList menu={"기타"} />
+          <MoneyList menu={"기타"} /> */}
+          {moneyList.map((db, idx) => (
+            <MoneyList key={idx} menu={db} />
+          ))}
         </ul>
       ) : (
         <Calendar nowYear={nowYear} nowMonth={nowMonth} todayDate={todayDate} />

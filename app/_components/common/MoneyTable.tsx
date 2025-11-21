@@ -12,7 +12,7 @@ export default function MoneyTable({ totalMoney }: totalMoneyProps) {
     <div className="rounded bg-white p-4 py-8 mt-2 shadow-sm">
       <ul className="flex flex-col gap-4">
         {totalMoney.map((item, idx) => {
-          const percent = (item.money / total) * 100;
+          const percent = total > 0 ? (item.money / total) * 100 : 0;
           return (
             <ProgressBar
               key={idx}
