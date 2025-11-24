@@ -54,7 +54,7 @@ export default function MainWrap() {
           >
             <FaChevronLeft />
           </button>
-          <p className="font-bold text-xl p-1 w-[60px] text-center">
+          <p className="font-bold text-xl p-1 w-[60px] text-center bg-white">
             {nowMonth}월
           </p>
           <button

@@ -71,6 +71,7 @@ export async function GET(req: NextRequest) {
         username: session.user.username,
         date: { $gte: start, $lt: end },
       })
+      .sort({ date: -1 })
       .toArray();
 
     return NextResponse.json({ total, userData }, { status: 200 });
