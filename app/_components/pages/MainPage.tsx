@@ -4,6 +4,7 @@ import Logo from "../common/Logo";
 import MainWrap from "../common/MainWrap";
 import MonthlyTotal from "../common/MonthlyTotal";
 import { signOut } from "next-auth/react";
+import Username from "../common/Username";
 
 export default function MainPage() {
   const [modal, setModal] = useState(false);
@@ -11,6 +12,7 @@ export default function MainPage() {
   const handleLogout = async () => {
     await signOut({ redirect: true });
   };
+
   return (
     <>
       <div className="w-[900px] mx-auto">
@@ -19,8 +21,7 @@ export default function MainPage() {
             <Logo />
           </div>
           <p className="">
-            <span className="font-bold text-[#ff6b81]">듀두듀듀</span>님
-            어서오세요 👋
+            <Username /> 님 어서오세요 👋
             <button
               onClick={() => setModal(true)}
               className="bg-[#ff6b81] text-sm text-white p-1 px-5 rounded-full border-2 border-white ml-4"

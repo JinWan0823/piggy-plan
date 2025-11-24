@@ -6,6 +6,7 @@ import MoneyList from "./MoneyList";
 import Calendar from "./Calendar";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import MoneyForm from "./MoneyForm";
+import NoneList from "./NoneList";
 
 export default function MainWrap() {
   const today = new Date();
@@ -53,7 +54,7 @@ export default function MainWrap() {
           >
             <FaChevronLeft />
           </button>
-          <p className="font-bold text-xl p-1 w-[60px] text-center">
+          <p className="font-bold text-xl p-1 w-[60px] text-center bg-white">
             {nowMonth}월
           </p>
           <button
@@ -77,11 +78,15 @@ export default function MainWrap() {
       {formState && <MoneyForm setFormState={setFormState} />}
 
       {!menu ? (
-        <ul>
-          {moneyList.map((db, idx) => (
-            <MoneyList key={idx} menu={db} />
-          ))}
-        </ul>
+        moneyList.length === 0 ? (
+          <NoneList />
+        ) : (
+          <ul>
+            {moneyList.map((db, idx) => (
+              <MoneyList key={idx} menu={db} />
+            ))}
+          </ul>
+        )
       ) : (
         <Calendar
           nowYear={nowYear}
