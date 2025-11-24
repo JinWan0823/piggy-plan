@@ -3,6 +3,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { connectDB } from "@/app/_lib/mongodb";
+import { revalidatePath } from "next/cache";
 
 export async function createMoney(
   prevState: { success: boolean; message: string } | null,
@@ -41,7 +42,7 @@ export async function createMoney(
       content,
       createdAt: new Date(),
     });
-
+    revalidatePath("/");
     return {
       success: true,
       message: "저장 완료 ✅",

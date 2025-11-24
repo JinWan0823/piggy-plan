@@ -20,8 +20,10 @@ function FormRow({
 
 export default function MoneyForm({
   setFormState,
+  onSuccess,
 }: {
   setFormState: React.Dispatch<SetStateAction<boolean>>;
+  onSuccess: () => void;
 }) {
   const years = [2025, 2024, 2023, 2022, 2021, 2020];
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -35,7 +37,21 @@ export default function MoneyForm({
   const [money, setMoney] = useState("");
   const [content, setContent] = useState("");
 
-  const [state, action] = useActionState(createMoney, null);
+  const [state, action] = useActionState(
+    async (
+      prev: { success: boolean; message: string } | null,
+      formData: FormData
+    ) => {
+      const result = await createMoney(prev, formData);
+
+      if (result.success) {
+        onSuccess();
+        setFormState(false);
+      }
+      return result;
+    },
+    null
+  );
 
   return (
     <div className="fixed inset-0 bg-[#333333de] z-[999] flex items-center justify-center">
