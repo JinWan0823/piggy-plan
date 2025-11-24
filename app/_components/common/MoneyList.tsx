@@ -7,7 +7,7 @@ interface MoneyListProps {
 
 export default function MoneyList({ menu }: MoneyListProps) {
   return (
-    <li className="w-full p-2 flex items-center bg-gray-200 rounded mt-2 font-bold shadow-sm">
+    <li className="w-full p-2 flex items-center bg-white rounded mt-2 font-bold border-1 border-gray-300 shadow-sm">
       <Category menu={menu.category} />
       <span className="w-[120px] text-center">
         {menu.money.toLocaleString()}원

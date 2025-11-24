@@ -17,7 +17,7 @@ export default function TabMenu({
   return (
     <>
       <div
-        className={`w-[60px] h-[30px] relative inset-shadow-sm inset-shadow-[#ff6b81] rounded-full cursor-pointer overflow-hidden
+        className={`w-[60px] h-[30px] bg-white relative inset-shadow-sm inset-shadow-[#ff6b81] rounded-full cursor-pointer overflow-hidden
              "bg-[#dfdfdf]"
           `}
         onClick={handleTabMenu}
