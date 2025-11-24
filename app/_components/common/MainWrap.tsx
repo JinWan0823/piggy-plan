@@ -94,7 +94,7 @@ export default function MainWrap() {
         ) : (
           <ul>
             {moneyList.map((db, idx) => (
-              <MoneyList key={idx} menu={db} />
+              <MoneyList key={idx} menu={db} onSuccess={fetchData} />
             ))}
           </ul>
         )
