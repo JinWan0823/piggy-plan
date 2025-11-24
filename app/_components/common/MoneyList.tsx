@@ -14,12 +14,21 @@ export default function MoneyList({ menu, onSuccess }: MoneyListProps) {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const deleteList = async () => {
-    const res = await fetch(`/api/money/${menu._id}`, {
-      method: "DELETE",
-    });
-    if (res.ok) {
-      onSuccess();
-      setDeleteModal(false);
+    try {
+      const res = await fetch(`/api/money/${menu._id}`, {
+        method: "DELETE",
+      });
+
+      if (res.ok) {
+        onSuccess();
+        setDeleteModal(false);
+      } else {
+        const data = await res.json();
+        alert(data?.message || "삭제에 실패했습니다.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("서버와 연결할 수 없습니다. 다시 시도해주세요.");
     }
   };
 
