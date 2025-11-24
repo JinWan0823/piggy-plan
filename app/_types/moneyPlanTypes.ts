@@ -6,6 +6,7 @@ export interface MenuTypes {
 }
 
 export interface TotalMoneyTypes {
+  _id: string;
   menu: string;
   money: number;
   content: string;

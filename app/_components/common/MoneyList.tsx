@@ -7,10 +7,21 @@ import { CgDanger } from "react-icons/cg";
 
 interface MoneyListProps {
   menu: TotalMoneyTypes;
+  onSuccess: () => void;
 }
 
-export default function MoneyList({ menu }: MoneyListProps) {
+export default function MoneyList({ menu, onSuccess }: MoneyListProps) {
   const [deleteModal, setDeleteModal] = useState(false);
+
+  const deleteList = async () => {
+    const res = await fetch(`/api/money/${menu._id}`, {
+      method: "DELETE",
+    });
+    if (res.ok) {
+      onSuccess();
+      setDeleteModal(false);
+    }
+  };
 
   return (
     <>
@@ -39,7 +50,7 @@ export default function MoneyList({ menu }: MoneyListProps) {
             <div className="font-bold text-white flex items-center justify-center gap-2 w-full mt-4">
               <button
                 className="bg-[#ff6b81] w-full rounded py-1"
-                onClick={() => {}}
+                onClick={deleteList}
               >
                 삭제
               </button>
