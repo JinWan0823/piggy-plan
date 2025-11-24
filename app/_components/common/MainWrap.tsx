@@ -30,17 +30,26 @@ export default function MainWrap() {
     setNowMonth((prev) => prev + 1);
   };
 
+  const fetchData = async () => {
+    const res = await fetch(
+      `/api/money/monthly?year=${nowYear}&month=${nowMonth}`,
+      { cache: "no-store" }
+    );
+    const data = await res.json();
+    setTotalMoney(data.total);
+    setMoneyList(data.userData);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       const res = await fetch(
-        `/api/money/monthly?year=${nowYear}&month=${nowMonth}`
+        `/api/money/monthly?year=${nowYear}&month=${nowMonth}`,
+        { cache: "no-store" }
       );
       const data = await res.json();
       setTotalMoney(data.total);
       setMoneyList(data.userData);
-    };
-
-    fetchData();
+    })();
   }, [nowMonth]);
 
   return (
@@ -75,7 +84,9 @@ export default function MainWrap() {
         </div>
       </div>
 
-      {formState && <MoneyForm setFormState={setFormState} />}
+      {formState && (
+        <MoneyForm setFormState={setFormState} onSuccess={fetchData} />
+      )}
 
       {!menu ? (
         moneyList.length === 0 ? (
