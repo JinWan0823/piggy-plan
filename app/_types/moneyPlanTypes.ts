@@ -13,3 +13,8 @@ export interface TotalMoneyTypes {
   date: string;
   category: string;
 }
+
+export interface TotalYearTypes {
+  month: number;
+  total: number;
+}
