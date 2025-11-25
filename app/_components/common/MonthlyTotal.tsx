@@ -1,4 +1,5 @@
 "use client";
+import { TotalYearTypes } from "@/app/_types/moneyPlanTypes";
 import React, { SetStateAction, useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
@@ -9,10 +10,17 @@ export default function MonthlyTotal({
   setModal: React.Dispatch<SetStateAction<boolean>>;
 }) {
   const [nowYear, setNowYear] = useState(new Date().getFullYear());
+  const [yearTotal, setYearTotal] = useState<TotalYearTypes[]>([]);
 
-  useEffect(() => {}, [nowYear]);
-
-  const arr = Array.from({ length: 12 });
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`/api/money/total?year=${nowYear}`);
+      const data = await res.json();
+      setYearTotal(data.monthlyArray);
+      console.log(data);
+    };
+    fetchData();
+  }, [nowYear]);
 
   return (
     <div className="fixed inset-0 min-w-screen min-h-screen bg-[#333333de] z-999 flex items-center justify-center">
@@ -27,16 +35,16 @@ export default function MonthlyTotal({
           </button>
         </div>
         <ul className="grid grid-cols-4 gap-2 mt-4">
-          {arr.map((_, idx) => (
+          {yearTotal.map((money, idx) => (
             <li
               key={idx}
               className="border-1 border-gray-300 rounded overflow-hidden"
             >
               <div className="text-center bg-[#ff6b81] text-white font-bold">
-                {idx + 1}월
+                {money.month}월
               </div>
               <p className="text-center font-bold py-4">
-                <span>420,000</span>원
+                <span>{money.total.toLocaleString()}</span>원
               </p>
             </li>
           ))}
