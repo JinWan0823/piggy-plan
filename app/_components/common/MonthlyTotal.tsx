@@ -22,27 +22,15 @@ export default function MonthlyTotal({
     fetchData();
   }, [nowYear]);
 
-  const handleYearPlus = () => {
-    if (nowYear === new Date().getFullYear()) return;
-
-    setNowYear((prev) => prev + 1);
-  };
-
   return (
     <div className="fixed inset-0 min-w-screen min-h-screen bg-[#333333de] z-999 flex items-center justify-center">
       <div className="bg-white w-[95%] max-w-[620px] border-t-8 border-[#ff6b81] rounded p-4 relative">
         <div className="flex items-center justify-center gap-2">
-          <button className="" onClick={() => setNowYear((prev) => prev - 1)}>
+          <button className="">
             <FaChevronLeft />
           </button>
           <span className="text-2xl font-bold text-[#ff6b81]">{nowYear}</span>
-          <button
-            disabled={nowYear === new Date().getFullYear()}
-            className={`${
-              nowYear === new Date().getFullYear() ? "text-gray-300" : ""
-            }`}
-            onClick={handleYearPlus}
-          >
+          <button className="">
             <FaChevronRight />
           </button>
         </div>
