@@ -20,8 +20,8 @@ export default function MainPage() {
           <div className="w-[240px]">
             <Logo />
           </div>
-          <p className="">
-            <Username /> 님 어서오세요 👋
+          <div className="flex items-center">
+            <Username />
             <button
               onClick={() => setModal(true)}
               className="bg-[#ff6b81] text-sm text-white p-1 px-5 rounded-full border-2 border-white ml-4"
@@ -34,7 +34,7 @@ export default function MainPage() {
             >
               로그아웃
             </button>
-          </p>
+          </div>
         </header>
         {modal && <MonthlyTotal setModal={setModal} />}
         <MainWrap />

@@ -7,6 +7,7 @@ import Calendar from "./Calendar";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import MoneyForm from "./MoneyForm";
 import NoneList from "./NoneList";
+import PigLoading from "./PigLoading";
 
 export default function MainWrap() {
   const today = new Date();
@@ -17,6 +18,7 @@ export default function MainWrap() {
   const [menu, setMenu] = useState(false);
   const [totalMoney, setTotalMoney] = useState([]);
   const [moneyList, setMoneyList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formState, setFormState] = useState(false);
 
@@ -31,6 +33,8 @@ export default function MainWrap() {
   };
 
   const fetchData = async () => {
+    setIsLoading(true);
+
     const res = await fetch(
       `/api/money/monthly?year=${nowYear}&month=${nowMonth}`,
       { cache: "no-store" }
@@ -38,10 +42,14 @@ export default function MainWrap() {
     const data = await res.json();
     setTotalMoney(data.total);
     setMoneyList(data.userData);
+
+    setIsLoading(true);
   };
 
   useEffect(() => {
     (async () => {
+      setIsLoading(true);
+
       const res = await fetch(
         `/api/money/monthly?year=${nowYear}&month=${nowMonth}`,
         { cache: "no-store" }
@@ -49,12 +57,14 @@ export default function MainWrap() {
       const data = await res.json();
       setTotalMoney(data.total);
       setMoneyList(data.userData);
+
+      setIsLoading(true);
     })();
   }, [nowMonth]);
 
   return (
     <>
-      <MoneyTable totalMoney={totalMoney} />
+      <MoneyTable totalMoney={totalMoney} isLoading={isLoading} />
       <div className="flex items-center justify-between my-2">
         <div className="flex items-stratch rounded overflow-hidden border-1 border-gray-200">
           <button
@@ -88,24 +98,31 @@ export default function MainWrap() {
         <MoneyForm setFormState={setFormState} onSuccess={fetchData} />
       )}
 
-      {!menu ? (
-        moneyList.length === 0 ? (
-          <NoneList />
-        ) : (
-          <ul>
-            {moneyList.map((db, idx) => (
-              <MoneyList key={idx} menu={db} onSuccess={fetchData} />
-            ))}
-          </ul>
-        )
-      ) : (
-        <Calendar
-          nowYear={nowYear}
-          nowMonth={nowMonth}
-          todayDate={todayDate}
-          moneyList={moneyList}
-        />
+      {!isLoading && (
+        <div className="py-10 bg-white border-1 border-gray-300 shadow-sm">
+          <PigLoading text="피기가 리스트를 가져오는 중" />
+        </div>
       )}
+
+      {isLoading &&
+        (!menu ? (
+          moneyList.length === 0 ? (
+            <NoneList />
+          ) : (
+            <ul>
+              {moneyList.map((db, idx) => (
+                <MoneyList key={idx} menu={db} onSuccess={fetchData} />
+              ))}
+            </ul>
+          )
+        ) : (
+          <Calendar
+            nowYear={nowYear}
+            nowMonth={nowMonth}
+            todayDate={todayDate}
+            moneyList={moneyList}
+          />
+        ))}
     </>
   );
 }
