@@ -5,6 +5,7 @@ import MainWrap from "../common/MainWrap";
 import MonthlyTotal from "../common/MonthlyTotal";
 import { signOut } from "next-auth/react";
 import Username from "../common/Username";
+import { motion } from "framer-motion";
 
 export default function MainPage() {
   const [modal, setModal] = useState(false);
@@ -15,7 +16,12 @@ export default function MainPage() {
 
   return (
     <>
-      <div className="w-[900px] mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 35 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="w-[900px] mx-auto"
+      >
         <header className="p-2 flex items-center justify-between border-b-2 border-[#ff6b81]">
           <div className="w-[240px]">
             <Logo />
@@ -38,7 +44,7 @@ export default function MainPage() {
         </header>
         {modal && <MonthlyTotal setModal={setModal} />}
         <MainWrap />
-      </div>
+      </motion.div>
     </>
   );
 }

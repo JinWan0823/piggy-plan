@@ -1,10 +1,12 @@
 "use client";
+import { motion } from "framer-motion";
 import { useActionState, useEffect, useState } from "react";
 import Logo from "../common/Logo";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
+  const [success, setSuccess] = useState(false);
   const [rememberId, setRememberId] = useState(() =>
     typeof window !== "undefined" && localStorage.getItem("savedId")
       ? true
@@ -40,14 +42,20 @@ export default function LoginForm() {
     if (res?.error) {
       return alert(res.error);
     }
+    setSuccess(true);
 
-    alert("로그인성공");
-    router.push("/");
+    setTimeout(() => router.push("/"), 500);
   }
 
   return (
     <>
-      <form action={submitAction} className="w-full flex flex-col gap-2">
+      <motion.form
+        action={submitAction}
+        initial={{ opacity: 0, y: 10 }}
+        animate={success ? { opacity: 0, scale: 0.95 } : { opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="w-full flex flex-col gap-2"
+      >
         <Logo />
         <input
           type="text"
@@ -65,9 +73,10 @@ export default function LoginForm() {
         />
         <button
           type="submit"
-          className="w-full text-center bg-[#FF6B81] font-bold text-[#fff] p-2 rounded-md"
+          disabled={isPending}
+          className="w-full text-center bg-[#FF6B81] font-bold text-[#fff] p-2 rounded-md disabled:opacity-70"
         >
-          로그인
+          {isPending ? "로그인 중..." : "로그인"}
         </button>
         <div className="flex gap-2 mt-1">
           <div className="text-[#aaa] text-sm flex items-center gap-1">
@@ -89,7 +98,7 @@ export default function LoginForm() {
             </label>
           </div>
         </div>
-      </form>
+      </motion.form>
     </>
   );
 }
